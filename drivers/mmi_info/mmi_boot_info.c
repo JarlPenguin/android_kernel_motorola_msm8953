@@ -290,6 +290,7 @@ int mmi_boot_info_init(void)
 	proc_bootinfo = proc_create("bootinfo",
 		0444, NULL, &bootinfo_proc_fops);
 
+	pr_info("BOOT_SEQ: 0x%08x\n", bi_boot_seq());
 	return 0;
 }
 
