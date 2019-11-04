@@ -364,6 +364,10 @@
 		status = "okay";
 		linux,contiguous-region = <&tzlog_dump_mem>;
 	};
+
+	restart@4ab000 {
+		qcom,force-warm-reboot;
+	};
 };
 
 &spi_7 { /* BLSP2 QUP2 */
