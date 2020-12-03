@@ -1,5 +1,7 @@
 comment "Qualcomm Atheros Prima WLAN module"
 
+if CFG80211 && WCNSS_CORE_PRONTO
+
 config PRIMA_WLAN
 
 	tristate "Qualcomm Atheros Prima WLAN module"
@@ -78,3 +80,4 @@ config WLAN_OFFLOAD_PACKETS
 	default n
 
 endif # PRIMA_WLAN || PRONTO_WLAN
+endif # CFG80211 && WCNSS_CORE_PRONTO
