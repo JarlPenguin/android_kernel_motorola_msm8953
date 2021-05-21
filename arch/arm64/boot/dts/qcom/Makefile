@@ -1,45 +1,28 @@
-#dtb-$(CONFIG_ARCH_QCOM)	+= apq8016-sbc.dtb msm8916-mtp.dtb
-#dtb-$(CONFIG_ARCH_QCOM)	+= msm8996-mtp.dtb
-#dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-db820c.dtb
-
 # Add 1k of padding to the DTBs to allow for environment variables
 # to be runtime added by the bootloader (i.e. /chosen properties)
 DTC_FLAGS += -p 1024
 
-ifeq ($(CONFIG_BUILD_ARM64_DT_OVERLAY),y)
-
-	dtbo-$(CONFIG_CEDRIC_DTB) += msm8937-cedric-mot-overlay.dtbo
-
-msm8937-cedric-mot-overlay.dtbo-base += msm8937-cedric-base.dts
-
-	dtbo-$(CONFIG_MONTANA_DTB) += msm8937-montana-mot-overlay.dtbo
-
-msm8937-montana-mot-overlay.dtbo-base += msm8937-montana-base.dts
-
-else
-dtb-$(CONFIG_CEDRIC_DTB) += \
-	msm8937-cedric-p1.dtb \
-	msm8937-cedric-p2.dtb \
-	msm8937-cedric-p3.dtb \
-	msm8937-cedric-p4.dtb \
-	msm8937-cedric-p5.dtb
-
-dtb-$(CONFIG_MONTANA_DTB) += \
-	msm8937-montana-p0.dtb \
-	msm8937-montana-p1a.dtb \
-	msm8937-montana-p1b.dtb \
-	msm8937-montana-p2.dtb \
-	msm8937-montana-p3.dtb
-
-dtb-$(CONFIG_SANDERS_DTB) += \
-	msm8953-sanders-p1.dtb \
-	msm8953-sanders-p2.dtb \
-	msm8953-sanders-p3.dtb \
-	msm8953-sanders-p4.dtb
-
-endif
-
 ifneq ($(CONFIG_MMI_DTB),y)
+dtb-$(CONFIG_ARCH_SDM845) += sdm845-sim.dtb \
+	sdm845-rumi.dtb \
+	sdm845-mtp.dtb \
+	sdm845-cdp.dtb \
+	sdm845-v2-rumi.dtb \
+	sdm845-v2-mtp.dtb \
+	sdm845-v2-robotics.dtb \
+	sdm845-v2-cdp.dtb \
+	sdm845-qrd.dtb \
+	sdm845-v2-qrd.dtb \
+	sdm845-v2-qvr-evt.dtb \
+	sdm845-v2-qvr-dvt.dtb \
+	sdm845-4k-panel-mtp.dtb \
+	sdm845-4k-panel-cdp.dtb \
+	sdm845-4k-panel-qrd.dtb \
+	sdm845-interposer-sdm670-mtp.dtb \
+	sdm845-interposer-sdm670-cdp.dtb \
+	sdm845-v2.1-rb3.dtb \
+	sdm845-v2.1-mtp.dtb
+
 ifeq ($(CONFIG_BUILD_ARM64_DT_OVERLAY),y)
 	dtbo-$(CONFIG_ARCH_SDM845) += \
 		sdm845-cdp-overlay.dtbo \
@@ -131,30 +114,7 @@ sda845-v2.1-4k-panel-qrd-overlay.dtbo-base := sda845-v2.1.dtb
 sda845-v2.1-cdp-sdxpoorwills-overlay.dtbo-base := sda845-v2.1.dtb
 sda845-v2.1-mtp-sdxpoorwills-overlay.dtbo-base := sda845-v2.1.dtb
 sda845-v2-mtp-sdxpoorwills-overlay.dtbo-base := sda845-v2.dtb
-endif
-
-ifneq ($(CONFIG_MMI_DTB),y)
-dtb-$(CONFIG_ARCH_SDM845) += sdm845-sim.dtb \
-	sdm845-rumi.dtb \
-	sdm845-mtp.dtb \
-	sdm845-cdp.dtb \
-	sdm845-v2-rumi.dtb \
-	sdm845-v2-mtp.dtb \
-	sdm845-v2-robotics.dtb \
-	sdm845-v2-cdp.dtb \
-	sdm845-qrd.dtb \
-	sdm845-v2-qrd.dtb \
-	sdm845-v2-qvr-evt.dtb \
-	sdm845-v2-qvr-dvt.dtb \
-	sdm845-4k-panel-mtp.dtb \
-	sdm845-4k-panel-cdp.dtb \
-	sdm845-4k-panel-qrd.dtb \
-	sdm845-interposer-sdm670-mtp.dtb \
-	sdm845-interposer-sdm670-cdp.dtb \
-	sdm845-v2.1-rb3.dtb \
-	sdm845-v2.1-mtp.dtb
-
-ifeq ($(CONFIG_BUILD_ARM64_DT_OVERLAY),y)
+	
 	dtbo-$(CONFIG_ARCH_SDM670) += \
 		sdm670-cdp-overlay.dtbo \
 		sdm670-mtp-overlay.dtbo \
@@ -710,7 +670,30 @@ dtb-$(CONFIG_ARCH_SDM429) += sdm429-mtp.dtb \
 	sdm429-bg-iot-wtp.dtb
 
 endif
+else
+ifeq ($(CONFIG_BUILD_ARM64_DT_OVERLAY),y)
+$(error Motorola DTBs currently don't support overlayed mode)
 endif
+dtb-$(CONFIG_CEDRIC_DTB) += \
+	msm8937-cedric-p1.dtb \
+	msm8937-cedric-p2.dtb \
+	msm8937-cedric-p3.dtb \
+	msm8937-cedric-p4.dtb \
+	msm8937-cedric-p5.dtb
+
+dtb-$(CONFIG_MONTANA_DTB) += \
+	msm8937-montana-p0.dtb \
+	msm8937-montana-p1a.dtb \
+	msm8937-montana-p1b.dtb \
+	msm8937-montana-p2.dtb \
+	msm8937-montana-p3.dtb
+
+dtb-$(CONFIG_SANDERS_DTB) += \
+	msm8953-sanders-p1.dtb \
+	msm8953-sanders-p2.dtb \
+	msm8953-sanders-p3.dtb \
+	msm8953-sanders-p4.dtb
+
 endif
 
 dtb-$(CONFIG_ARCH_SDM845_VM) += sdm845-vm.dtb
