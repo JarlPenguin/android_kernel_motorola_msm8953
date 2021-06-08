@@ -140,6 +140,7 @@
 			};
 		};
 
+#ifdef CONFIG_CORESIGHT
 		qcom,gpu-coresights {
 			#address-cells = <1>;
 			#size-cells = <0>;
@@ -158,6 +159,7 @@
 				};
 			};
 		};
+#endif
 
 		/* Power levels */
 		qcom,gpu-pwrlevels {
