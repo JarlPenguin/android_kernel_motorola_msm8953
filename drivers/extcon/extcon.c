@@ -1046,9 +1046,6 @@ struct extcon_dev *extcon_dev_allocate(const unsigned int *supported_cable)
 {
 	struct extcon_dev *edev;
 
-	if (!supported_cable)
-		return ERR_PTR(-EINVAL);
-
 	edev = kzalloc(sizeof(*edev), GFP_KERNEL);
 	if (!edev)
 		return ERR_PTR(-ENOMEM);
@@ -1089,10 +1086,11 @@ int extcon_dev_register(struct extcon_dev *edev)
 			return ret;
 	}
 
-	if (!edev || !edev->supported_cable)
+	if (!edev)
 		return -EINVAL;
 
-	for (; edev->supported_cable[index] != EXTCON_NONE; index++);
+	if (edev->supported_cable)
+		for (; edev->supported_cable[index] != EXTCON_NONE; index++);
 
 	edev->max_supported = index;
 	if (index > SUPPORTED_CABLE_MAX) {
@@ -1104,7 +1102,10 @@ int extcon_dev_register(struct extcon_dev *edev)
 	edev->dev.class = extcon_class;
 	edev->dev.release = extcon_dev_release;
 
-	edev->name = dev_name(edev->dev.parent);
+
+	if (edev->dev.parent)
+		edev->name = dev_name(edev->dev.parent);
+
 	if (IS_ERR_OR_NULL(edev->name)) {
 		dev_err(&edev->dev,
 			"extcon device name is null\n");
