@@ -317,20 +317,6 @@ static int stml0xx_device_power_on(struct stml0xx_data *ps_stml0xx)
 	return err;
 }
 
-static ssize_t dock_print_name(struct extcon_dev *extcon_dev, char *buf)
-{
-	switch (extcon_get_state(extcon_dev, 0)) {
-	case NO_DOCK:
-		return snprintf(buf, 5, "None\n");
-	case DESK_DOCK:
-		return snprintf(buf, 5, "DESK\n");
-	case CAR_DOCK:
-		return snprintf(buf, 4, "CAR\n");
-	}
-
-	return -EINVAL;
-}
-
 int stml0xx_enable(void)
 {
 	int err = 0;
@@ -988,21 +974,17 @@ static int stml0xx_probe(struct spi_device *spi)
 	init_waitqueue_head(&ps_stml0xx->stml0xx_ms_data_wq);
 
 	ps_stml0xx->dsdev.name = "dock";
-	ps_stml0xx->dsdev.name = dock_print_name;
 	err = extcon_dev_register(&ps_stml0xx->dsdev);
 	if (err) {
 		dev_err(&spi->dev, "Couldn't register switch (%s) rc=%d",
 			ps_stml0xx->dsdev.name, err);
-		ps_stml0xx->dsdev.dev;
 	}
 
 	ps_stml0xx->edsdev.name = "extdock";
-	ps_stml0xx->edsdev.name = dock_print_name;
 	err = extcon_dev_register(&ps_stml0xx->edsdev);
 	if (err) {
 		dev_err(&spi->dev, "Couldn't register switch (%s) rc=%d",
 			ps_stml0xx->edsdev.name, err);
-		ps_stml0xx->edsdev.dev;
 	}
 
 	ps_stml0xx->input_dev = input_allocate_device();
