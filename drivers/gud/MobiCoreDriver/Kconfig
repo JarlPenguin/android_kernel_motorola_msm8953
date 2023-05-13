@@ -1,0 +1,9 @@
+#
+# MobiCore configuration
+#
+
+config MOBICORE_SUPPORT
+	tristate "Linux MobiCore Support"
+	default n
+	help
+	  Enable Linux Kernel MobiCore Support

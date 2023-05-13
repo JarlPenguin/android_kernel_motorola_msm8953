@@ -1,11 +1,42 @@
-KERNEL_SRC ?= /lib/modules/$(shell uname -r)/build
+#/*
+# * Copyright (c) 2013-2018 TRUSTONIC LIMITED
+# * All Rights Reserved.
+# *
+# * This program is free software; you can redistribute it and/or
+# * modify it under the terms of the GNU General Public License
+# * version 2 as published by the Free Software Foundation.
+# *
+# * This program is distributed in the hope that it will be useful,
+# * but WITHOUT ANY WARRANTY; without even the implied warranty of
+# * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# * GNU General Public License for more details.
+# */
+#
+# Makefile for the Kinibi core driver
+#
 
-all:
-	$(MAKE) -C $(KERNEL_SRC) M=$(shell pwd) modules $(KBUILD_OPTIONS)
 
-modules_install:
-	$(MAKE) INSTALL_MOD_STRIP=1 -C $(KERNEL_SRC) M=$(shell pwd) modules_install
+ccflags-y += -DNDEBUG
+ccflags-y += -Wno-declaration-after-statement
+ccflags-y += -I$(srctree)/drivers/gud/MobiCoreDriver
 
-clean:
-	$(MAKE) -C $(KERNEL_SRC) M=$(PWD) clean
+obj-$(CONFIG_MOBICORE_SUPPORT) += mcDrvModule.o
 
+
+mcDrvModule-y := \
+	admin.o \
+	client.o \
+	clientlib.o \
+	clock.o \
+	fastcall.o \
+	iwp.o \
+	logging.o \
+	main.o \
+	mcp.o \
+	mmu.o \
+	nq.o \
+	pm.o \
+	scheduler.o \
+	session.o \
+	teeclientapi.o \
+	user.o
