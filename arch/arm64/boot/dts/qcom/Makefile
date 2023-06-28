@@ -682,6 +682,13 @@ dtb-$(CONFIG_ARCH_SDM429) += sdm429-mtp.dtb \
 	sdm429-bg-iot-wtp.dtb
 
 endif # CONFIG_MMI_DEVICE_DTBS
+ifeq ($(CONFIG_MONTANA_DTB),y)
+dtb-$(CONFIG_ARCH_MSM8937) += msm8937-montana-p0.dtb \
+	msm8937-montana-p1a.dtb \
+	msm8937-montana-p1b.dtb \
+	msm8937-montana-p2.dtb \
+	msm8937-montana-p3.dtb
+endif
 endif
 
 dtb-$(CONFIG_ARCH_SDM845_VM) += sdm845-vm.dtb
