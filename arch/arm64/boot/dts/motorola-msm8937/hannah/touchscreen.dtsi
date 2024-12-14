@@ -1,0 +1,84 @@
+&soc {
+	vdda_touch_vreg: vdda_touch_vreg {
+		compatible = "regulator-fixed";
+		regulator-name = "vdda_touch";
+		gpio = <&tlmm 131 0>;
+		startup-delay-us = <300>;
+		enable-active-high;
+	};
+};
+
+&i2c_3 {
+	status = "ok";
+	/* clock-frequency = <400000>; */
+
+	focaltech@38{
+#ifdef DEVICE_HANNAH
+	compatible = "focaltech,fts";
+#else
+	compatible = "focaltech,mmi";
+#endif
+	reg = <0x38>;
+	interrupt-parent = <&tlmm>;
+	interrupts = <65 0x02>;
+	/* vdd-supply = <&pm8937_l17>; */
+	vdd-supply = <&vdda_touch_vreg>;
+	vcc_i2c-supply = <&pm8937_l6>;
+	/* pins used by touchscreen */
+	pinctrl-names = "pmx_ts_active","pmx_ts_suspend","pmx_ts_release";
+	pinctrl-0 = <&ts_int_active &ts_reset_active>;
+	pinctrl-1 = <&ts_int_suspend &ts_reset_suspend>;
+	pinctrl-2 = <&ts_release>;
+#ifdef DEVICE_HANNAH
+	focaltech,name = "fts_ts";
+	focaltech,family-id = <0x08>;
+#else
+	focaltech,name = "ft8006u";
+	focaltech,family-id = <0xf0>;
+#endif
+	focaltech,reset-gpio = <&tlmm 64 0x01>;
+	focaltech,irq-gpio = <&tlmm 65 0x02>;
+	focaltech,display-coords = <0 0 720 1440>;
+	focaltech,max-touch-number = <10>;
+	focaltech,no-force-update;
+	focaltech,i2c-pull-up;
+	focaltech,group-id = <1>;
+	focaltech,hard-reset-delay-ms = <20>;
+	focaltech,soft-reset-delay-ms = <200>;
+#ifdef DEVICE_RHANNAH
+	focaltech,num-max-touches = <10>;
+#else
+	focaltech,num-max-touches = <5>;
+#endif
+	focaltech,fw-delay-aa-ms = <30>;
+	focaltech,fw-delay-55-ms = <30>;
+	focaltech,fw-upgrade-id1 = <0x79>;
+	focaltech,fw-upgrade-id2 = <0x08>;
+	focaltech,fw-delay-readid-ms = <10>;
+	focaltech,fw-delay-era-flsh-ms = <2000>;
+	focaltech,fw-auto-cal;
+	focaltech,resume-in-workqueue;
+	focaltech,ignore-id-check;
+	};
+
+	himax-ts@48 {
+		compatible = "himax,hxcommon";
+		reg = <0x48>;
+		status = "ok";
+		interrupt-parent = <&tlmm>;
+		interrupts = <65 0x0>;
+		himax,rst-gpio = <&tlmm 64 0x00>;
+		himax,irq-gpio = <&tlmm 65 0x00>;
+		himax,display-coords = <0 720 0 1440>;
+		himax,panel-coords = <0 720 0 1440>;
+		report_type = <1>;
+	};
+
+	novatek@62 {
+		compatible = "novatek,NVT-ts";
+		reg = <0x62>;
+		status = "ok";
+		novatek,reset-gpio = <&tlmm 64 0x00>;
+		novatek,irq-gpio = <&tlmm 65 0x00>;
+	};
+};

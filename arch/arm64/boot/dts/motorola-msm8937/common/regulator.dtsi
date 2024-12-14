@@ -1,0 +1,49 @@
+&rpm_bus {
+	rpm-regulator-ldoa18 {
+		compatible = "qcom,rpm-smd-regulator-resource";
+		qcom,resource-name = "ldoa";
+		qcom,resource-id = <18>;
+		qcom,regulator-type = <0>;
+		qcom,hpm-min-load = <10000>;
+		status = "okay";
+
+		regulator-l18 {
+			compatible = "qcom,rpm-smd-regulator";
+			regulator-name = "pm8937_l18";
+			qcom,set = <3>;
+			status = "okay";
+		};
+	};
+};
+
+&apc_vreg_corner {
+#if defined(SOC_MSM8937)
+	qcom,cpr-virtual-corner-init-voltage-adjustment =
+			<50000 50000 50000 50000 50000 75000 50000>,
+			<50000 50000 50000 50000 50000 75000 50000>,
+			<50000 50000 50000 50000 50000 75000 50000>,
+			<50000 50000 50000 50000 50000 75000 50000>;
+
+	qcom,cpr-virtual-corner-quotient-adjustment =
+			<100 100 100 100 100 150 100>,
+			<100 100 100 100 100 150 100>,
+			<100 100 100 100 100 150 100>,
+			<100 100 100 100 100 150 100>;
+#elif defined(SOC_MSM8940)
+	qcom,cpr-virtual-corner-init-voltage-adjustment =
+			<50000 50000 50000 50000 50000 75000 50000>,
+			<50000 50000 50000 50000 50000 75000 50000>,
+			<50000 50000 50000 50000 50000 75000 50000>,
+			<50000 50000 50000 50000 50000 75000 50000>,
+			<50000 50000 50000 50000 50000 75000 50000>,
+			<50000 50000 50000 50000 50000 75000 50000>;
+
+	qcom,cpr-virtual-corner-quotient-adjustment =
+			<100 100 100 100 100 150 100>,
+			<100 100 100 100 100 150 100>,
+			<100 100 100 100 100 150 100>,
+			<100 100 100 100 100 150 100>,
+			<100 100 100 100 100 150 100>,
+			<100 100 100 100 100 150 100>;
+#endif
+};

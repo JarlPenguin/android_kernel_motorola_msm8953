@@ -1,0 +1,17 @@
+&mdss_dsi0 {
+	qcom,display-id = "primary";
+};
+
+&mdss_dsi_active {
+	config {
+		/delete-property/ output-high;
+	};
+};
+
+&mdss_mdp {
+	qcom,mdss-pref-prim-intf = "dsi";
+};
+
+&wled {
+	qcom,wled-stepper-en;
+};

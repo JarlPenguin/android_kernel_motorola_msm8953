@@ -1,0 +1,7 @@
+&spmi_bus {
+	qcom,pm8937@0 {
+		qcom,power-on@800 {
+			/delete-property/ qcom,store-hard-reset-reason;
+		};
+	};
+};

@@ -1,0 +1,18 @@
+&soc {
+	vdda_touch_vreg: vdda_touch_vreg {
+		compatible = "regulator-fixed";
+		regulator-name = "vdda_touch";
+		gpio = <&tlmm 59 0>;
+		startup-delay-us = <300>;
+		enable-active-high;
+		regulator-always-on;
+	};
+};
+
+&i2c_3 {
+	synaptics_dsx_i2c@20 {
+		touch_vdd-supply = <&vdda_touch_vreg>;
+		regulator-power-off-no-delay;
+		pinctrl-0 = <&touch_reset_active &touch_int_default>;
+	};
+};

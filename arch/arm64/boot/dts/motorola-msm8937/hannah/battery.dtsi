@@ -1,0 +1,58 @@
+&mot_batterydata {
+	qcom,batt-id-range-pct = <15>;
+	#include "../batterydata/batterydata-he50-atl-pmi8937.dtsi"
+	#include "../batterydata/batterydata-he50-cos-pmi8937.dtsi"
+	#include "../batterydata/batterydata-he50-cos-pmi8937-r1.dtsi"
+};
+
+&qpnp_smbcharger {
+	qcom,fastchg-current-ma = <3000>;
+#ifdef DEVICE_HANNAH
+	qcom,chg-thermal-mitigation = <3000>, <2500>,<2000>, <1500>,
+					<1000>, <700>, <400>;
+#else
+	qcom,chg-thermal-mitigation = <3000>, <2500>,<2000>, <1500>,
+					<1000>,<700>, <600>;
+#endif
+	/delete-property/ qcom,dc-thermal-mitigation;
+#ifdef DEVICE_HANNAH
+	qcom,parallel-charge-current-map = <3000 3000 0>,
+					<2500 2500 0>,
+					<2000 2000 0>,
+					<1500 1500 0>,
+					<1000 1000 0>,
+					<700 700 0>,
+					<400 400 0>;
+#else
+	qcom,parallel-charge-current-map = <3000 3000 0>,
+					<2500 2500 0>,
+					<2000 2000 0>,
+					<1500 1500 0>,
+					<1000 1000 0>,
+					<700 700 0>,
+					<600 600 0>;
+#endif
+	qcom,stepchg-voltage-mv = <4200>;
+	qcom,stepchg-current-ma = <2000>;
+	qcom,stepchg-taper-ma = <1800>;
+	qcom,stepchg-iterm-ma = <125>;
+	qcom,enable-hvdcp-9v;
+	qcom,weak-charger-check-enable;
+	qcom,temp-warm-current-ma = <1500>;
+	qcom,temp-cool-current-ma = <900>;
+	qcom,temp-slightly-cool-current-ma = <900>;
+	qcom,slightly-cool-temp-c = <15>;
+	qcom,enable-charging-limit;
+	qcom,upper-limit-capacity = <75>;
+	qcom,lower-limit-capacity = <60>;
+};
+
+&qpnp_fg {
+	qcom,ext-sense-type; /* External Sense Resistor */
+	qcom,thermal-coefficients = /bits/ 16 <0xda86 0xf050 0x083c>;
+	qcom,irq-volt-empty-mv = <3200>;
+	qcom,fg-cutoff-voltage-mv = <3400>;
+	qcom,cl-vbat-est-thr-uv = <300000>;
+	qcom,fg-force-restart-enable;
+	/delete-property/ qcom,support_multi_coefficients;
+};

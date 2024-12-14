@@ -1,0 +1,57 @@
+#include "../dsi-panel/dsi-panel-mot-tianma-570-hd-video.dtsi"
+#include "../dsi-panel/dsi-panel-mot-tianma-571-hd-video.dtsi"
+#include "../dsi-panel/dsi-panel-mot-djn-570-hd-video.dtsi"
+#include "../dsi-panel/dsi-panel-mot-djn-571-hd-video.dtsi"
+#include "../dsi-panel/dsi-panel-mot-wistron-570-hd-video.dtsi"
+
+&pmx_mdss {
+	mdss_dsi_active {
+		mux {
+			pins = "gpio60";
+		};
+
+		config {
+			pins = "gpio60";
+		};
+	};
+
+	mdss_dsi_suspend {
+		mux {
+			pins = "gpio60";
+		};
+
+		config {
+			pins = "gpio60";
+			output-high;
+		};
+	};
+};
+
+&mdss_dsi0 {
+	qcom,dsi-pref-prim-pan = <&mot_tianma_570_hd_vid_v0>;
+	vddio_disp-supply = <&pm8937_l6>;
+	vsp_disp-supply = <&lab_regulator>;
+	vsn_disp-supply = <&ibb_regulator>;
+
+	pinctrl-names = "mdss_default", "mdss_sleep";
+	pinctrl-0 = <&mdss_dsi_active>;
+	pinctrl-1 = <&mdss_dsi_suspend>;
+
+	qcom,platform-reset-gpio = <&tlmm 60 0>;
+};
+
+/* display boost and inverting boost regulators */
+&labibb {
+	status = "ok";
+	qpnp,qpnp-labibb-mode = "lcd";
+};
+
+&ibb_regulator {
+	qcom,qpnp-ibb-discharge-resistor = <32>;
+};
+
+&wled {
+	qcom,fs-curr-ua = <25000>;
+	qcom,cons-sync-write-delay-us = <1000>;
+	qcom,en-cabc;
+};

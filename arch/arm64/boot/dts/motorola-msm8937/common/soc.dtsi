@@ -1,0 +1,49 @@
+&msm_gpu {
+	qcom,disable-wake-on-touch;
+};
+
+&qcom_seecom {
+	qcom,appsbl-qseecom-support;
+};
+
+&soc {
+#ifdef SOC_MSM8917
+	mcd {
+		compatible = "qcom,mcd";
+		qcom,ce-hw-instance = <0>;
+		qcom,ce-device = <0>;
+		interrupts = <0 248 0>;
+		interrupt-names = "mcd_irq";
+		clocks = <&clock_gcc clk_crypto_clk_src>,
+			 <&clock_gcc clk_gcc_crypto_clk>,
+			 <&clock_gcc clk_gcc_crypto_ahb_clk>,
+			 <&clock_gcc clk_gcc_crypto_axi_clk>;
+		clock-names = "core_clk_src", "core_clk",
+				"iface_clk", "bus_clk";
+		qcom,ce-opp-freq = <100000000>;
+	};
+#endif
+
+	qcom,lpm-levels {
+		qcom,use-psci;
+	};
+
+#ifdef SOC_MSM8917
+	qcom_tzlog: tz-log@8600720
+#else
+	qcom_tzlog: tz-log@08600720
+#endif
+	{
+		status = "okay";
+		linux,contiguous-region = <&tzlog_bck_mem>;
+	};
+
+	restart@4ab000 {
+		qcom,force-warm-reboot;
+	};
+
+	wdog: qcom,wdt@b017000 {
+		qcom,bark-time = <22000>;
+		linux,contiguous-region = <&wdog_cpuctx_mem>;
+	};
+};

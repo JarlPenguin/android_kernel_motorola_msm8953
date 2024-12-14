@@ -1,0 +1,62 @@
+/* Copyright (c) 2016, Motorola Mobility Inc. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+/* Custom */
+#ifdef SOC_MSM8920
+#define SOC_MSM8917
+#endif
+
+/* Moto */
+
+// TODO: Handle SOC_MSM8917 and SOC_MSM8920
+#if defined(SOC_MSM8937)
+#include "qcom/msm8937.dtsi"
+#elif defined(SOC_MSM8940)
+#include "qcom/msm8940.dtsi"
+#endif
+
+#ifdef SOC_MSM8917
+#include "qcom/msm8917-audio.dtsi"
+#endif
+
+#include "qcom/pmi8950.dtsi"
+
+#ifdef SOC_MSM8917
+#include "qcom/msm8917-pinctrl.dtsi"
+#else
+#include "qcom/msm8937-pinctrl.dtsi"
+#endif
+
+#include "carrier-channel-ids.dtsi"
+#include "../dsi-panel/dsi-panel-mot-dummy-qhd-video.dtsi"
+#include "include/moto-mem-reserve.h"
+
+/* Custom */
+
+#include "pinctrl.dtsi"
+
+#include "android.dtsi"
+#include "audio.dtsi"
+#include "battery.dtsi"
+#include "bus.dtsi"
+#include "display.dtsi"
+#include "misc.dtsi"
+#include "pm8937.dtsi"
+#include "pmi8950.dtsi"
+#include "regulator.dtsi"
+#include "reserved-memory.dtsi"
+#include "soc.dtsi"
+#include "storage.dtsi"
+#include "thermal.dtsi"
+#include "vibrator.dtsi"
+
+#include "peripheral/peripheral.dtsi"

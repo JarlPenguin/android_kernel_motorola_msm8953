@@ -1,0 +1,5 @@
+&soc {
+	qcom,msm-thermal {
+		qcom,config-info = "montana";
+	};
+};

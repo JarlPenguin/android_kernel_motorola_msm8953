@@ -1,0 +1,61 @@
+/ {
+	qcom,enable-legacy-adsp-hacks;
+};
+
+&int_codec {
+#ifndef OPTION_USE_WSA_CODEC
+	/delete-property/ asoc-wsa-codec-names;
+	/delete-property/ asoc-wsa-codec-prefixes;
+	/delete-property/ msm-vdd-wsa-switch-supply;
+	/delete-property/ qcom,msm-vdd-wsa-switch-voltage;
+	/delete-property/ qcom,msm-vdd-wsa-switch-current;
+#endif
+
+	status = "okay";
+	qcom,model = "msm8952-snd-card-mtp";
+	qcom,msm-mbhc-hphl-swh = <1>;
+	qcom,msm-mbhc-gnd-swh = <1>;
+	qcom,msm-hs-micbias-type = "internal";
+	qcom,audio-routing =
+		"RX_BIAS", "MCLK",
+		"INT_LDO_H", "MCLK",
+		"MIC BIAS External", "Handset Mic",
+		"MIC BIAS Internal2", "Headset Mic",
+		"MIC BIAS External", "Secondary Mic",
+		"AMIC1", "MIC BIAS External",
+		"AMIC2", "MIC BIAS Internal2",
+		"AMIC3", "MIC BIAS External";
+	/delete-property/ qcom,hdmi-dba-codec-rx;
+};
+
+#ifndef OPTION_USE_WSA_CODEC
+&soc {
+	/delete-node/ sound-9335;
+	/delete-node/ wsa881x_analog_vi_pctrl;
+	/delete-node/ wsa881x_analog_clk_pctrl;
+	/delete-node/ wsa881x_analog_reset_pctrl;
+
+	alsa_to_h2w {
+		compatible = "mmi,alsa-to-h2w";
+	};
+};
+
+&i2c_2 {
+	/delete-node/ wsa881x-i2c-codec@44;
+	/delete-node/ wsa881x-i2c-codec@45;
+	/delete-node/ wsa881x-i2c-codec@e;
+	/delete-node/ wsa881x-i2c-codec@f;
+};
+
+&slim_msm {
+	tasha_codec {
+		/delete-node/ swr_master;
+	};
+};
+
+&tlmm {
+	/delete-node/ wsa_clk;
+	/delete-node/ wsa_reset;
+	/delete-node/ wsa-vi;
+};
+#endif

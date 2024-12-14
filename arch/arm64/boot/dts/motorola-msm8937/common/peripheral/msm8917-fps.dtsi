@@ -1,0 +1,147 @@
+// TODO: Deduplicate with msm8917-moto-common-fps.dtsi and msm8917-moto-fps-pinctrl.dtsi
+
+&tlmm {
+	fps: fps {
+		rst_active: rst_active {
+			/* RESET */
+			mux {
+				pins = "gpio127";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio127";
+				drive-strength = <2>; /* 2 MA */
+				bias-pull-up; /* pull up */
+				output-high;
+			};
+		};
+
+		rst_suspend: rst_suspend{
+			/* RESET */
+			mux {
+				pins = "gpio127";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio127";
+				drive-strength = <2>; /* 2 MA */
+				bias-pull-up; /* pull up */
+				output-high;
+			};
+		};
+
+		int_active: int_active {
+			/* INTERRUPT */
+			mux {
+				pins = "gpio128";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio128";
+				drive-strength = <2>; /* 2 MA */
+				input-enable;
+			};
+		};
+
+		int_suspend: int_suspend{
+			/* INTERRUPT */
+			mux {
+				pins = "gpio128";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio128";
+				drive-strength = <2>; /* 2 MA */
+				input-enable;
+			};
+		};
+
+		ldo_en_active: ldo_en_active {
+			/* LDO_EN */
+			mux {
+				pins = "gpio132";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio132";
+				drive-strength = <2>; /* 2 MA */
+				bias-pull-up; /* pull up */
+				output-high;
+			};
+		};
+
+		ldo_en_suspend: ldo_en_suspend{
+			/* LDO_EN */
+			mux {
+				pins = "gpio132";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio132";
+				drive-strength = <2>; /* 2 MA */
+				bias-pull-up; /* pull up */
+				output-high;
+			};
+		};
+
+		ldo3_en_active: ldo3_en_active {
+			/* LDO3_EN */
+			mux {
+				pins = "gpio133";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio133";
+				drive-strength = <2>; /* 2 MA */
+				bias-pull-up; /* pull up */
+				output-high;
+			};
+		};
+
+		ldo3_en_suspend: ldo3_en_suspend{
+			/* LDO3_EN */
+			mux {
+				pins = "gpio133";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio133";
+				drive-strength = <2>; /* 2 MA */
+				bias-pull-up; /* pull up */
+				output-high;
+			};
+		};
+	};
+};
+
+&soc {
+	et320: et320{
+		compatible = "egistec,et320";
+		status = "/chosen", "mmi,fps", "true";
+		reg = <0>;
+		interrupt-parent = <&tlmm>;
+		interrupts = <128 0x0>;
+		egistec,gpio_irq    = <&tlmm 128 0x1>;
+		egistec,gpio_rst    = <&tlmm 127 0x2>;
+		egistec,gpio_ldo1p8_en = <&tlmm 132 0x0>;
+		egistec,gpio_ldo3p3_en = <&tlmm 133 0x0>;
+		pinctrl-names = "default", "suspend";
+		pinctrl-0 = <&rst_active &int_active &ldo_en_active &ldo3_en_active>;
+		pinctrl-1 = <&rst_suspend &int_suspend &ldo_en_suspend &ldo3_en_suspend>;
+	};
+
+	fp_id: fp_id {
+		status = "ok";
+		compatible = "fp_id,fp_id";
+		interrupt-parent = <&tlmm>;
+		fp,gpio-id = <&tlmm 25 0x0>;
+	};
+};

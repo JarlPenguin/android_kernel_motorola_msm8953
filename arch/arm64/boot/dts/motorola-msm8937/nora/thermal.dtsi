@@ -1,0 +1,16 @@
+&pm8937_vadc {
+	chan@11 {
+		label = "msm_therm";
+	};
+
+	chan@13 {
+		label = "chg_therm";
+	};
+};
+
+&soc{
+	qcom,msm-thermal {
+		qcom,config-info = "nora_8917";
+	};
+};
+

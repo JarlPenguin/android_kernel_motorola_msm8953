@@ -1,0 +1,4 @@
+&sdhc_2 {
+	pinctrl-1 = <&sdc2_clk_off &sdc2_cmd_off &sdc2_data_off>;
+	cd-gpios = <&tlmm 67 0x0>;
+};

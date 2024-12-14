@@ -1,0 +1,105 @@
+&tlmm {
+	bma25x_int1 {
+		bma25x_int1_default: default {
+			mux {
+				pins = "gpio41";
+				function = "gpio";
+			};
+			config {
+				pins = "gpio41";
+				drive-strength = <6>;
+				bias-disable;
+			};
+		};
+
+		bma25x_int1_sleep: sleep {
+			mux {
+				pins = "gpio41";
+				function = "gpio";
+			};
+			config {
+				pins = "gpio41";
+				drive-strength = <2>;
+				bias-disable;
+			};
+		};
+	};
+
+	bma25x_int2 {
+		bma25x_int2_default: default {
+			mux {
+				pins = "gpio42";
+				function = "gpio";
+			};
+			config {
+				pins = "gpio42";
+				drive-strength = <6>;
+				bias-disable;
+			};
+		};
+
+		bma25x_int2_sleep: sleep {
+			mux {
+				pins = "gpio42";
+				function = "gpio";
+			};
+			config {
+				pins = "gpio42";
+				drive-strength = <2>;
+				bias-disable;
+			};
+		};
+	};
+
+	epl8802_int {
+		epl8802_active: active {
+			mux {
+				pins = "gpio43";
+				function = "gpio";
+			};
+			config {
+				pins = "gpio43";
+				drive-strength = <2>; /* 2 MA */
+				bias-disable; /* No PULL */
+			};
+		};
+
+		epl8802_suspend: suspend {
+			mux {
+				pins = "gpio43";
+				function = "gpio";
+			};
+			config {
+				pins = "gpio43";
+				drive-strength = <2>; /* 2 MA */
+				bias-disable; /* No PULL */
+			};
+		};
+	};
+
+	akm_int {
+		akm_default: default {
+			mux {
+				pins = "gpio44";
+				function = "gpio";
+			};
+			config {
+				pins = "gpio44";
+				drive-strength = <2>; /* 2 MA */
+				bias-disable; /* No PULL */
+			};
+		};
+
+		akm_sleep: sleep {
+			mux {
+				pins = "gpio44";
+				function = "gpio";
+			};
+			config {
+				pins = "gpio44";
+				drive-strength = <2>; /* 2 MA */
+				bias-disable; /* No PULL */
+			};
+		};
+	};
+};

@@ -1,0 +1,17 @@
+&soc {
+    spi_4: spi@78b8000 { /* BLSP1 QUP4 */
+        status = "disabled";
+        /delete-node/ stml0xx@0;
+    };
+};
+
+&i2c_2 {
+	/delete-node/ adv7533@39;
+	/delete-node/ pericom-type-c@1d;
+};
+
+&usb_otg {
+	qcom,hsusb-otg-phy-init-seq =
+		<0x33 0x80 0x38 0x81 0x2f 0x82 0x13 0x83 0xffffffff>;
+	qcom,chg-dcp-icl = <1800>;
+};

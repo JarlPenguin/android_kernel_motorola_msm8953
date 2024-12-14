@@ -1,0 +1,22 @@
+&soc {
+	qcom,msm-thermal {
+		qcom,config-info = "cedric";
+	};
+
+	sys_temp_support {
+		compatible = "mmi,sys-temp";
+		mmi,temperature-names = "front_temp",
+					"back_temp";
+		status = "ok";
+	};
+};
+
+&pm8937_vadc {
+	chan@11 {
+		label = "chg_therm";
+	};
+
+	chan@13 {
+		label = "msm_therm";
+	};
+};

@@ -1,0 +1,19 @@
+&pm8937_vadc {
+	chan@11 {
+		label = "msm_therm";
+	};
+
+	chan@13 {
+		label = "chg_therm";
+	};
+};
+
+&soc{
+	qcom,msm-thermal {
+#if defined(DEVICE_JETER)
+		qcom,config-info = "jeter";
+#else
+		qcom,config-info = "aljeter";
+#endif
+	};
+};

@@ -1,0 +1,65 @@
+#ifdef DEVICE_RHANNAH
+#include "../dsi-panel/dsi-panel-mot-tianma-571-720p-video.dtsi"
+#endif
+#include "../dsi-panel/dsi-panel-mot-tianma-599-hd-video.dtsi"
+#include "../dsi-panel/dsi-panel-mot-djn-599-hd-video.dtsi"
+#include "../dsi-panel/dsi-panel-mot-djn-600-hd-video.dtsi"
+#ifndef DEVICE_HANNAH
+#include "../dsi-panel/dsi-panel-mot-ofilm-599-hd-video.dtsi"
+#endif
+
+&pmx_mdss {
+	mdss_dsi_active {
+		mux {
+			pins = "gpio60";
+		};
+
+		config {
+			pins = "gpio60";
+		};
+	};
+
+	mdss_dsi_suspend {
+		mux {
+			pins = "gpio60";
+		};
+
+		config {
+			pins = "gpio60";
+			output-high;
+		};
+	};
+};
+
+&mdss_dsi0 {
+#ifdef DEVICE_RHANNAH
+	qcom,dsi-pref-prim-pan = <&mot_tianma_571_720p_vid_v0>;
+#else
+	qcom,dsi-pref-prim-pan = <&mot_tianma_599_hd_vid_v0>;
+#endif
+	vddio_disp-supply = <&pm8937_l6>;
+	vsp_disp-supply = <&lab_regulator>;
+	vsn_disp-supply = <&ibb_regulator>;
+
+	pinctrl-names = "mdss_default", "mdss_sleep";
+	pinctrl-0 = <&mdss_dsi_active>;
+	pinctrl-1 = <&mdss_dsi_suspend>;
+
+	qcom,platform-reset-gpio = <&tlmm 60 0>;
+};
+
+/* display boost and inverting boost regulators */
+&labibb {
+	status = "ok";
+	qpnp,qpnp-labibb-mode = "lcd";
+};
+
+&ibb_regulator {
+	qcom,qpnp-ibb-discharge-resistor = <32>;
+};
+
+&wled {
+	qcom,fs-curr-ua = <25000>;
+	qcom,cons-sync-write-delay-us = <1000>;
+	qcom,en-cabc;
+};

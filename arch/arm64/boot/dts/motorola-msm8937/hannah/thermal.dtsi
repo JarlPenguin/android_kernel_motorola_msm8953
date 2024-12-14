@@ -1,0 +1,23 @@
+#ifndef DEVICE_HANNAH
+&pm8937_vadc {
+	chan@11 {
+		label = "msm_therm";
+	};
+
+	chan@13 {
+		label = "chg_therm";
+	};
+};
+#endif
+
+&soc {
+	qcom,msm-thermal {
+#if defined(DEVICE_RHANNAH)
+		qcom,config-info = "rhannah";
+#elif defined(DEVICE_HANNAH)
+		qcom,config-info = "hannah";
+#else
+		qcom,config-info = "ahannah";
+#endif
+	};
+};

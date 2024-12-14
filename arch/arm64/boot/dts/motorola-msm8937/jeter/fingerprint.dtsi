@@ -1,0 +1,45 @@
+#ifdef DEVICE_JETER
+&ldo_en_active {
+	mux {
+		pins = "gpio124";
+	};
+	config {
+		pins = "gpio124";
+	};
+};
+
+&ldo_en_suspend {
+	mux {
+		pins = "gpio124";
+	};
+	config {
+		pins = "gpio124";
+	};
+};
+#endif
+
+&soc {
+    /delete-node/ et320;
+	et320: et320{
+		compatible = "egistec,et320";
+		status = "ok";
+		reg = <0>;
+		interrupt-parent = <&tlmm>;
+		interrupts = <48 0x0>;
+		egistec,gpio_irq    = <&tlmm 48 0x1>;
+		egistec,gpio_rst    = <&tlmm 127 0x2>;
+#ifdef DEVICE_JETER
+                egistec,gpio_ldo1p8_en = <&tlmm 124 0x0>;
+#else
+		egistec,gpio_ldo1p8_en = <&tlmm 31 0x0>;
+#endif
+		egistec,gpio_ldo3p3_en = <&tlmm 45 0x0>;
+		pinctrl-names = "default", "suspend";
+		pinctrl-0 = <&rst_active &int_active &ldo_en_active &ldo3_en_active>;
+		pinctrl-1 = <&rst_suspend &int_suspend &ldo_en_suspend &ldo3_en_suspend>;
+	};
+};
+
+&soc {
+	/delete-node/ fp_id;
+};

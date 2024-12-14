@@ -1,0 +1,14 @@
+#ifdef SOC_MSM8917
+
+#include "msm8917-fps.dtsi"
+#include "msm8917-i2c.dtsi"
+#include "msm8917-misc-pinctrl.dtsi"
+
+#else
+
+#include "msm8937-dtv.dtsi"
+#include "msm8937-ltr559.dtsi"
+#include "msm8937-stml0xx.dtsi"
+#include "msm8937-synaptics_dsx_i2c.dtsi"
+
+#endif
