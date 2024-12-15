@@ -1,10 +1,6 @@
-KERNEL_SRC ?= /lib/modules/$(shell uname -r)/build
-
-all:
-	$(MAKE) -C $(KERNEL_SRC) M=$(shell pwd) modules $(KBUILD_OPTIONS)
-
-modules_install:
-	$(MAKE) INSTALL_MOD_STRIP=1 -C $(KERNEL_SRC) M=$(shell pwd) modules_install
-
-clean:
-	$(MAKE) -C $(KERNEL_SRC) M=$(PWD) clean
+mmi_info-objs += mmi_storage_info.o
+mmi_info-objs += mmi_ram_info.o
+mmi_info-objs += mmi_unit_info.o
+mmi_info-objs += mmi_boot_info.o
+mmi_info-objs += mmi_info_main.o
+obj-$(CONFIG_MMI_INFO) += mmi_info.o
